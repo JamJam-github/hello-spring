@@ -6,11 +6,12 @@ import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public class MemberService {
-    //    private final MemberRepository memberRepository = new MemoryMemberRepository();
     private final MemberRepository memberRepository;
 
     @Autowired
@@ -23,7 +24,6 @@ public class MemberService {
      */
     public Long join(Member member){
         // 같은 이름이 있는 중복 회원 검증
-        // Optional<Member> result = memberRepository.findByName(member.getName());
         validateDuplicateMember(member);
         memberRepository.save(member);
         return member.getId();
